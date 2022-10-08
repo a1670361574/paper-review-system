@@ -3,3 +3,4 @@ pyqtchart
 qdarkstyle
 openpyxl
 pyinstaller
+xlrd~=1.2.0
