@@ -1,14 +1,16 @@
 from src.student import Student
 from src.tutor import Tutor
 from src.pre_group import PreGroup
+from src.expert import Expert
 import random
 
 
-def pre_reply(student_sheet, tutor_sheet):
+def formal_reply(student_sheet, tutor_sheet, expert_sheet):
     """
     预答辩安排
     :param student_sheet: 包含学生信息的sheet表格
     :param tutor_sheet: 导师信息sheet表格
+    :param expert_sheet: 校外专家sheet表格
     :return: 分配好的两天预答辩的各个组
     """
     group_number = 5
@@ -28,6 +30,11 @@ def pre_reply(student_sheet, tutor_sheet):
                      tutor_sheet.cell_value(i, 10), tutor_sheet.cell_value(i, 11), tutor_sheet.cell_value(i, 12))
         tutorInfo.append(temp)
 
+    # 读取校外专家信息
+    expertInfo = []
+    for i in range(2, expert_sheet.nrows):
+        temp = Expert(expert_sheet.cell_value(i, 0), expert_sheet.cell_value(i, 1), expert_sheet.cell_value(i, 4))
+
     # 参加第一天预答辩的教授与其他导师
     prof_day1 = []
     other_day1 = []
@@ -37,12 +44,12 @@ def pre_reply(student_sheet, tutor_sheet):
 
     # 筛选出教授与其他导师
     for i in tutorInfo:
-        if i.preDay1 == 1:
+        if i.firstDay == 1:
             if i.title == "教授":
                 prof_day1.append(i)
             else:
                 other_day1.append(i)
-        if i.preDay2 == 1:
+        if i.secondDay == 1:
             if i.title == "教授":
                 prof_day2.append(i)
             else:
@@ -54,11 +61,6 @@ def pre_reply(student_sheet, tutor_sheet):
 
     random.shuffle(prof_day2)
     random.shuffle(other_day2)
-
-    # print(prof_day1, other_day1)
-    # for i in tutorInfo:
-    #     if (i.title == "教授") & (i.preDay1 == 1):
-    #         i.print_info()
 
     group_day1 = []
     group_day2 = []
