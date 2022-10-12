@@ -1,10 +1,12 @@
+
 import xlrd
 
 from main.pre_reply import pre_reply
+from main.formal_reply import formal_reply
 from src.student import Student
 from src.tutor import Tutor
 from src.expert import Expert
-from main.pre_reply import*
+from main.output import output
 
 
 def read_excel(path):
@@ -12,18 +14,18 @@ def read_excel(path):
     return workBook
 
 
-# def pre_oral_defence(student_info, tutor_info):
-
-
 if __name__ == '__main__':
-    input1 = read_excel('data/数据-输入1：答辩学生信息表.xlsx')
-    student = input1.sheet_by_index(0)
+    input1 = read_excel('file/数据-输入1：答辩学生信息表.xlsx')
+    student_sheet = input1.sheet_by_index(0)
 
-    input2 = read_excel('data/数据-输入2：硕博导师和校外专家池.xlsx')
-    tutor = input2.sheet_by_index(0)
-    expert = input2.sheet_by_index(1)
+    input2 = read_excel('file/数据-输入2：硕博导师和校外专家池.xlsx')
+    tutor_sheet = input2.sheet_by_index(0)
+    expert_sheet = input2.sheet_by_index(1)
 
-    pre_reply(student, tutor)
+    group_day1, group_day2 = pre_reply(student_sheet, tutor_sheet)
+    # formal_group_day1, formal_group_day2 = formal_reply(student_sheet, tutor_sheet, expert_sheet)
+    output(group_day1, group_day2)
+    # output(formal_group_day1, formal_group_day2)
 
     # print(sheet1.row_values(1))
 
